@@ -15,7 +15,6 @@ const (
 	KeychainBackend      BackendType = "keychain"
 	KWalletBackend       BackendType = "kwallet"
 	WinCredBackend       BackendType = "wincred"
-	FileBackend          BackendType = "file"
 )
 
 type BackendType string
@@ -26,12 +25,10 @@ var supportedBackends = map[BackendType]opener{}
 func AvailableBackends() []BackendType {
 	b := []BackendType{}
 	for k := range supportedBackends {
-		if k != FileBackend {
-			b = append(b, k)
-		}
+		b = append(b, k)
 	}
 	// make sure FileBackend is last
-	return append(b, FileBackend)
+	return b
 }
 
 type opener func(cfg Config) (Keyring, error)
