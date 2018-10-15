@@ -13,7 +13,6 @@ const (
 	InvalidBackend       BackendType = "invalid"
 	SecretServiceBackend BackendType = "secret-service"
 	KeychainBackend      BackendType = "keychain"
-	KWalletBackend       BackendType = "kwallet"
 )
 
 type BackendType string
