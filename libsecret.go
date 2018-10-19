@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/godbus/dbus"
+	"github.com/fluidkeys/dbus"
 	"github.com/gsterjov/go-libsecret"
 )
 
