@@ -51,14 +51,20 @@ func (k *keychain) Get(key string) (Item, error) {
 
 	debugf("Querying keychain for service=%q, account=%q, keychain=%q", k.service, key, k.path)
 	results, err := gokeychain.QueryItem(query)
-	if err == gokeychain.ErrorItemNotFound || len(results) == 0 {
-		debugf("No results found")
-		return Item{}, ErrKeyNotFound
-	}
 
 	if err != nil {
-		debugf("Error: %#v", err)
-		return Item{}, err
+		if err == gokeychain.ErrorItemNotFound {
+			debugf("No results found")
+			return Item{}, ErrKeyNotFound
+		} else {
+			debugf("Error: %#v", err)
+			return Item{}, fmt.Errorf("error calling gokeychain.QueryItem: %v")
+		}
+	}
+
+	if len(results) == 0 {
+		debugf("QueryItem returned empty list (no error)")
+		return Item{}, ErrKeyNotFound
 	}
 
 	item := Item{
